@@ -1,0 +1,4 @@
+Investigacion
+Desarrollo
+Pruebas
+Resultado final
