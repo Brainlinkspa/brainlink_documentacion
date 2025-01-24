@@ -2,17 +2,28 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# BrainLink
 
-Let's discover **Docusaurus in less than 5 minutes**.
 
-## Getting Started
+## Modelo de proceso de desarrollo
 
-Get started by **creating a new site**.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Herramientas a utilizar
+El sistema trabajara con las siguientes herramientas:
+- a
+- b
+- c
 
-## Generate a new site
+
+## Arquitectura de Software
+Se presentan las arquitecturas del software
+
+### Arquitectura Fisica
+Componentes fisicos a utilizar
+![Arquitectura física](/img/arquitectura_fisica.png)
+
+### Arquitectura Logica
+Componentes logicos a utilizar
 
 Generate a new Docusaurus site using the **classic template**:
 
