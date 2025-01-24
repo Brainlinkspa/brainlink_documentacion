@@ -2,46 +2,33 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# BrainLink
+Sistema que ayuda a gestionar los datos de veterinarias agilizando sus procesos.
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## Modelo de proceso de desarrollo
+El modelo de proceso de desarrollo a utilizar será scrum, por la agilidad que este manifiesta.
 
-## Getting Started
+## Herramientas a utilizar
+El sistema trabajara con las siguientes herramientas:
+- Next.js (Frontend)
+- Nest.js (Backend)
+- PostgresSql (Base de datos)
+- Docker (Contenedores)
+- Linux (Servidor)
+- Gmail (Para envios de correo)
+- Google Calendar (Para agendar citas)
+- Figma (Para diseño)
+- Docusaurus (Documentacion)
+- Jira (Para planificacion)
+- Drive (Para guardar archivos)
 
-Get started by **creating a new site**.
+## Arquitectura de Software
+Se presentan las arquitecturas del software
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### Arquitectura Fisica
+Componentes fisicos a utilizar
+<!-- ![Arquitectura física](/img/arquitectura_fisica.png) -->
 
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+### Arquitectura Logica
+Componentes logicos a utilizar
+<!-- ![Arquitectura logico](/img/arquitectura_logica.png) -->
