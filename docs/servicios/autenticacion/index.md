@@ -1,15 +1,12 @@
-Debe ir en autenticacion.
-
 ---
-id: Dependencias Autenticacion
-title: Dependencias
+id: dependencias-autenticacion
+title: Autenticacion
 sidebar_position: 2
 ---
 
-
 # Dependencias del Sistema de Autenticación
 
-Se describen las dependencias necesarias para ejecutar y desarrollar el sistema de autenticación basado en **NestJS**. Aquí  explicamos cada grupo de dependencias y su propósito.
+Se describen las dependencias necesarias para ejecutar y desarrollar el sistema de autenticación basado en **NestJS**. Aquí explicamos cada grupo de dependencias y su propósito.
 
 ---
 
@@ -22,7 +19,7 @@ Estas son las dependencias requeridas para que el sistema funcione correctamente
 | **@nestjs/common**       | ^10.4.15  | Proporciona decoradores y utilidades comunes de NestJS.                     |
 | **@nestjs/config**       | ^3.3.0    | Manejo de configuraciones usando variables de entorno.                      |
 | **@nestjs/core**         | ^10.4.15  | El núcleo de NestJS, necesario para aplicaciones.                           |
-| **@nestjs/platform-express** | ^10.4.15 | Integra NestJS con Express.                                                 |
+| **@nestjs/platform-express** | ^10.4.15 | Integra NestJS con Express.                                              |
 | **bcrypt**               | ^5.1.1    | Librería para encriptar contraseñas.                                        |
 | **cookie-parser**        | ^1.4.7    | Manejo de cookies en las peticiones HTTP.                                   |
 | **dotenv**               | ^16.4.7   | Carga variables de entorno desde un archivo `.env`.                         |
@@ -36,7 +33,7 @@ Estas son las dependencias requeridas para que el sistema funcione correctamente
 Estas herramientas son necesarias para el desarrollo, pruebas y mantenimiento del sistema:
 
 | Paquete                         | Versión   | Descripción                                                                |
-|---------------------------------|-----------|----------------------------------------------------------------------------|
+|----------------------------------|-----------|----------------------------------------------------------------------------|
 | **@nestjs/cli**                 | ^10.0.0   | CLI de NestJS para generar y administrar la aplicación.                    |
 | **eslint**                      | ^8.0.0    | Herramienta para analizar y mejorar la calidad del código.                 |
 | **jest**                        | ^29.5.0   | Framework de pruebas unitarias.                                            |
