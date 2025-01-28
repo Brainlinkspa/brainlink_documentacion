@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Estructura del proyecto:
+# Estructura del proyecto
 ```
 AuthSystem/
 │
@@ -33,3 +33,7 @@ AuthSystem/
 ├── tsconfig.json                     # Configuración de TypeScript
 └── vite.config.ts                    # Configuración de Vite (si estás usando Vite como bundler)
 ```
+
+## Diagrama del proyecto:
+
+![Diagrama Ilustrativo de autenticacion.](../../../static/custom-img/DiagramaServicioGeneral.png)

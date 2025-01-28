@@ -45,6 +45,8 @@ Respuesta de error:
 }
 ```
 
+![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/LoginFallido.png)
+
 ### 3. **Generación del Token**
    - Si las credenciales son válidas, el servicio genera un **token JWT** que contiene la información del usuario (como el correo y rol).
 
@@ -58,22 +60,13 @@ Respuesta exitosa:
 }
 ```
 
+![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/LoginExitoso.png)
+
 ### 4. **Almacenamiento en Cookies**:
    - El token generado se almacena en una **cookie** segura para mantener la sesión activa.
 
 ```typescrypt
  const token = this.authService.generateToken();
-```
-
-### 5. **Respuesta (Response)**:
-   - Si el inicio de sesión es exitoso, se envía una **respuesta 200 (OK)** con un mensaje de éxito y el token generado.
-
-```json
-{
-  "message": "Login exitoso",
-  "statusCode": 200,
-  "token": "jwt-token-generado"
-}
 ```
 
 ## 2. Verificación de Token
@@ -99,9 +92,9 @@ Content-Type: application/json
 
 ### Respuestas (Response)
 
-- Si el token es válido, se devuelve la información decodificada del token (como el correo electrónico y el rol del usuario).
+- Si el token es válido, se devuelve la información decodificada del token (como el correo electrónico y el rol del usuario). (Estado actual, despues solo sera enviada una respuesta de que el token es valido.)
 
-### Respuesta si el token es valido:
+### Respuesta (Actual) si el token es valido:
 
 ```json
 {
@@ -114,6 +107,9 @@ Content-Type: application/json
 }
 ```
 
+![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/TokenValido.png)
+
+
 ### Respuesta de token no valido:
 
 ```json
@@ -122,3 +118,5 @@ Content-Type: application/json
   "statusCode": 403
 }
 ```
+
+![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/TokenInvalido.png)

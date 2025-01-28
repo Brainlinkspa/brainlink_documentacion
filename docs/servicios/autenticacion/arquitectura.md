@@ -1,8 +1,16 @@
+---
+sidebar_position: 1
+---
+
 # Arquitectura del servicio
 
 El patrón **Service Layer** es una arquitectura que organiza la lógica de negocio en capas bien definidas. Este modelo actúa como intermediario entre:
 
 AuthModule y UserModule
+
+## Diagrama ilustrativo de service layer:
+
+![Diagrama Ilustrativo de service layer](../../../static/custom-img/ServiceLayer.png)
 
 ## Por que se utiliza esta arquitectura?
 
@@ -33,8 +41,3 @@ La organización modular de la lógica de negocio permite manejar el crecimiento
 
 ### **5. Consistencia**
 Centralizar las reglas y procesos asegura que todas las partes del sistema apliquen las mismas normas, reduciendo errores y mejorando la confiabilidad.
-
----
-
-## Conclusión
-Adoptar una arquitectura con separación de responsabilidades y servicios bien definidos no solo mejora la calidad del código, sino que también optimiza el desarrollo, mantenimiento y escalabilidad del sistema.

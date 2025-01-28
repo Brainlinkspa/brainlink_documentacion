@@ -62,3 +62,6 @@ Para instalar las dependencias, ejecuta:
 
 ```bash
 npm install
+```
+
+## Diagrama general del servicio:

@@ -46,6 +46,10 @@ async validateUser(email: string, password: string): Promise<any> {
   }
 }
 ```
+![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/AutenticarToken.png)
+
+
+
 ## Generación de Tokens JWT
 
 Aquí implementamos la funcionalidad para generar un **token JWT** cuando el usuario se autentica correctamente.
@@ -81,7 +85,7 @@ Este método se encarga de verificar la validez de un token JWT proporcionado. S
 
 ### Código para Verificar el Token
 
-El siguiente código recibe un token, lo verifica y, si es válido, devuelve los datos decodificados:
+El siguiente código recibe un token, lo verifica y, si es válido, devuelve los datos decodificados (Actual):
 
 ```typescript
 async verifyToken(token: string): Promise<any> {
@@ -96,6 +100,8 @@ async verifyToken(token: string): Promise<any> {
   }
 }
 ```
+
+![Diagrama Ilustrativo.](../../../../static/custom-img/AutenticarToken.png)
 
 ## Manejo de Cookies para Autenticación
 

@@ -2,6 +2,7 @@
 id: modelo-espiral
 title: Modelo Elegido
 sidebar_label: Modelo Espiral
+sidebar_position: 3
 ---
 
 ## Modelo Espiral
@@ -33,7 +34,3 @@ El modelo espiral permite trabajar de manera iterativa, lo que significa que cad
 
 **Explicación**:
 En este caso se utiliza modelo espiral debido a su enfoque iterativo, dado que cada desarrollo mejora y refina poco a poco el proyecto adaptandose perfectamente a futuras implementaciones nuevas, por ejemplo sistemas de seguridad, formas de guardado de usuarios, etc. . .
-
-## Conclusión
-
-El **modelo espiral** es el enfoque ideal para el proyecto debido a su flexibilidad, capacidad de adaptarse a cambios en los requisitos y su énfasis en la gestión de riesgos y retroalimentación continua. Gracias a este modelo, se puede entregar un producto de calidad, minimizando los riesgos y asegurando que se ajuste a las expectativas de los usuarios.
