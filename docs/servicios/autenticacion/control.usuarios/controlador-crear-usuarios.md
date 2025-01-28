@@ -27,8 +27,10 @@ if (!email || !password || !rol_id) {
 }
 ```
 
+![Validacion de datos de entrada.](../../../../static/auth-img/FalloCrearUsuario.png)
+
 ### 2. **Verificación del Token de Autenticación**
-   Se obtiene el token JWT de las cookies de la solicitud a través del servicio de autenticación `AuthService`. Si no se proporciona el token, se responde con un **401 Unauthorized**.
+   Se obtiene el token JWT de las cookies de la solicitud a través del servicio de autenticación `auth.controller`. Si no se proporciona el token, se responde con un **401 Unauthorized**.
 
 ```typescript
 const token = this.authService.getTokenFromCookies(req);
@@ -39,6 +41,9 @@ if (!token) {
   });
 }
 ```
+
+![Verificacion de token de autenticacion.](../../../../static/auth-img/Tokent.png)
+
 
 ### 3. **Verificación de la Validez del Token**
    El token es verificado mediante el servicio `AuthService`. Si el token no es válido o ha expirado, se responde con un **401 Unauthorized**.
@@ -53,6 +58,8 @@ if (!decodedToken) {
 }
 ```
 
+![Verificar validez de token.](../../../../static/auth-img/TInvalido.png)
+
 ### 4. **Autorización del Rol del Usuario**
    Se extrae el `rolId` del token decodificado y se verifica que el usuario autenticado tenga el rol de **administrador** (rol_id = 1). Si no es así, se responde con un **403 Forbidden**.
 
@@ -66,6 +73,8 @@ if (userRolId !== 1) {
 }
 ```
 
+![Autorizar al usuario por rol.](../../../../static/auth-img//UsuarioNoAutorizado.png)
+
 ### 5. **Creación del Usuario**
    Si el usuario autenticado es un administrador, se procede a crear el nuevo usuario llamando al servicio `UsersService`. Si la operación es exitosa, se responde con un **201 Created** y los detalles del usuario creado.
 
@@ -73,51 +82,5 @@ if (userRolId !== 1) {
 const result = await this.usersService.createUser(email, password, rol_id);
 return res.status(HttpStatus.CREATED).json(result);
 ```
-## Respuestas esperadas:
 
-###  Respuesta de creacion de usuario exitosa:
-
-```typescript
-{
-  "message": "Usuario creado con éxito",
-  "statusCode": 201,
-  "user": {
-    "id": 123,
-    "email": "usuario@example.com",
-    "rolId": 2
-  }
-}
-```
-
-### Falta de datos requridos:
-
-```typescript
-{
-  "message": "Faltan datos requeridos: email, password, o rol_id.",
-  "statusCode": 400
-}
-```
-
-### Token no proporcionado:
-```typescript
-{
-  "message": "Token no proporcionado. Acceso no autorizado.",
-  "statusCode": 401
-}
-```
-
-### Token invalido o expirado:
-```typescript
-{
-  "message": "Token inválido o expirado. Acceso no autorizado.",
-  "statusCode": 401
-}
-```
-
-### Acceso Denegado por permiso:
-```typescript
-{
-  "message": "Acceso denegado. Solo los administradores pueden crear usuarios.",
-  "statusCode": 403
-}
-```
+![Crear usuarios.](../../../../static/auth-img/UsuarioCreado.png)

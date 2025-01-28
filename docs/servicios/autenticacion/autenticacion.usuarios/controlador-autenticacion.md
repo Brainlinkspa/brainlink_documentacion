@@ -45,7 +45,7 @@ Respuesta de error:
 }
 ```
 
-![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/LoginFallido.png)
+![Diagrama Ilustrativo de login fallido.](../../../../static/auth-img/LoginFallido.png)
 
 ### 3. **Generación del Token**
    - Si las credenciales son válidas, el servicio genera un **token JWT** que contiene la información del usuario (como el correo y rol).
@@ -60,7 +60,7 @@ Respuesta exitosa:
 }
 ```
 
-![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/LoginExitoso.png)
+![Diagrama Ilustrativo de login exitoso.](../../../../static/auth-img/LoginExitoso.png)
 
 ### 4. **Almacenamiento en Cookies**:
    - El token generado se almacena en una **cookie** segura para mantener la sesión activa.
@@ -107,7 +107,7 @@ Content-Type: application/json
 }
 ```
 
-![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/TokenValido.png)
+![Diagrama Ilustrativo para validar el token (caso exitoso).](../../../../static/auth-img/TokenValido.png)
 
 
 ### Respuesta de token no valido:
@@ -119,4 +119,4 @@ Content-Type: application/json
 }
 ```
 
-![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/TokenInvalido.png)
+![Diagrama Ilustrativo que valida el token (caso no exitoso).](../../../../static/auth-img/TokenInvalido.png)

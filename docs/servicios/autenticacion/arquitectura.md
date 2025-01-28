@@ -10,7 +10,7 @@ AuthModule y UserModule
 
 ## Diagrama ilustrativo de service layer:
 
-![Diagrama Ilustrativo de service layer](../../../static/custom-img/ServiceLayer.png)
+![Diagrama Ilustrativo de service layer](../../../static/auth-img/ServiceLayer.png)
 
 ## Por que se utiliza esta arquitectura?
 

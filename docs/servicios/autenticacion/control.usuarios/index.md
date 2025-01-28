@@ -5,4 +5,4 @@ sidebar_position: 5
 
 ## Diagrama general para crear usuarios
 
-![alt text](../../../../static/custom-img/CrearUsuarios.png)
+![Diagrama de crear usuarios](../../../../static/auth-img/CrearUsuarios.png)

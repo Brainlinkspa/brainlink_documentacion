@@ -23,6 +23,9 @@ this.pool = new Pool({
 });
 ```
 
+![Diagrama Ilustrativo de conexion a BD.](../../../../static/auth-img/ConexionBD.png)
+
+
 El `UsersService` gestiona la creación de usuarios y garantiza que siempre haya un usuario administrador en el sistema. Utiliza un **pool de conexiones PostgreSQL** para interactuar con la base de datos y **bcrypt** para encriptar las contraseñas de los usuarios.
 
 ### Crear un Nuevo Usuario

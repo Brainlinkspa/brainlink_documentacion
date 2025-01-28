@@ -46,9 +46,8 @@ async validateUser(email: string, password: string): Promise<any> {
   }
 }
 ```
-![Diagrama Ilustrativo de autenticacion.](../../../../static/custom-img/AutenticarToken.png)
 
-
+![Diagrama Ilustrativo de autenticacion de token.](../../../../static/auth-img/AutenticarToken.png)
 
 ## Generación de Tokens JWT
 
@@ -101,7 +100,7 @@ async verifyToken(token: string): Promise<any> {
 }
 ```
 
-![Diagrama Ilustrativo.](../../../../static/custom-img/AutenticarToken.png)
+![Diagrama Ilustrativo para autenticar el token.](../../../../static/auth-img/AutenticarToken.png)
 
 ## Manejo de Cookies para Autenticación
 
