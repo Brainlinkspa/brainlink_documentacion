@@ -94,16 +94,12 @@ Content-Type: application/json
 
 - Si el token es válido, se devuelve la información decodificada del token (como el correo electrónico y el rol del usuario). (Estado actual, despues solo sera enviada una respuesta de que el token es valido.)
 
-### Respuesta (Actual) si el token es valido:
+### Respuesta si el token es valido:
 
 ```json
 {
   "message": "Token válido",
   "statusCode": 200,
-  "user": {
-    "email": "usuario@example.com",
-    "rolId": 1
-  }
 }
 ```
 
