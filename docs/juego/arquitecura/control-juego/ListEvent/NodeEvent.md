@@ -11,10 +11,9 @@ La clase `NodeEvent` representa un nodo individual en la lista de eventos de `Li
 
 ## Variables y atributos
 
-- `int numberNode`: Es el identificador del nodo, se asigna cuando es añadido a una lista de eventos
-- `string nameAction`:  El nombre de la acción asociada al evento
-- `Func<object> onInvoke`: 
-- `Func<object,object>`:
-- `NodeEvent Next`:
+- `int numberNode`: Es el identificador del nodo, se asigna cuando es añadido a una lista de eventos.
+- `string nameAction`:  El nombre de la acción asociada al evento.
+- `Func<object> onInvoke { get; set; }`: Almacena la lógica que se debe ejecutar cuando se invoca el evento, no recibe párametros y devuelve un tipo `object`.
+- `Func<object,object> onInvkeParams { get; set; }`: Almacena la lógica que se debe ejecutar cuando se invoca el evento, recibe y devuelve un tipo `object`.
+- `NodeEvent Next { get; set; }`: Almacena la referencia al evento siguiente.
 
----

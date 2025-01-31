@@ -20,3 +20,29 @@ La clase `ListEvent` gestiona una lista enlazada de eventos, donde cada evento e
 
 ---
 
+## Funciones y métodos
+
+### Add
+Son métodos para agregar un nodo nuevo a la lista de eventos, existen diversas formas de añadir uno según se vea necesario:
+```csharp
+public void Add(string nombreAction, NodeEvent nodeEvent)
+```
+Agrega tras buscar si ya existe un nodo con el nombre de acción. Si se encuentra, el nuevo nodo se agrega después de ese nodo.
+
+```csharp
+public void Add(NodeEvent nodeEvent)
+```
+Agrega al final de la secuencia. Si la lista está vacía, se convierte en el primer nodo; si no, se recorre la lista hasta encontrar el último nodo y se agrega al final.
+
+### InvokeNode
+Son métodos para invocar al primer nodo de la lista y ejecutar su lógica, existen diversas formas para realizar el llamado:
+
+```csharp
+public void InvokeNode<T>() where T : class
+```
+Al invocar, requiere de una clase (restricción necesaria para el correcto funcionamiento en los modos de juego)
+
+```csharp
+public void InvokeNode()
+```
+Al invocar, no necesita de ninguna clase.

@@ -3,6 +3,8 @@
 ---
 
 # GameManager
+
+## Descripción
 ```csharp
 public class GameManager : MonoBehaviour
 ```

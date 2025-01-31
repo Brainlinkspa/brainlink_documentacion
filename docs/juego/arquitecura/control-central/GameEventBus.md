@@ -3,6 +3,8 @@
 ---
 
 # GameEventBus
+
+## Descripción
 ```csharp
 public static class GameEventBus<T> where T : class
 ```
@@ -12,11 +14,31 @@ Esto se consigue gracias al uso de `<T>`, lo que hace que la clase sea genérica
 
 ---
 
-## Funciones y metodos
+## Funciones y métodos
 
-### 
+### Subscribe
+```csharp
+public static void Subscribe(string nameEvent, Action<T> listener)
+```
+Permite que un listener  se suscriba a un evento específico. Cuando el evento se publique, el listener será llamado.
 
-### 
+Si el evento no existe aún en el diccionario `_eventListeners`, se crea una lista de listeners para ese evento. Luego, agrega el listener a la lista de suscriptores del evento correspondiente.
+### Publish
+```csharp
+public static void Publish(string eventName, T eventArgs)
+```
+Publica un evento, lo que hace que todos los listeners suscritos a ese evento se ejecuten.
+
+Si el evento existe en el diccionario `_eventListeners`, recorre la lista de listeners y les pasa los argumentos del evento. Luego, cada listener se ejecuta con los parámetros proporcionados.
+
+
+### Unsubscribe
+```csharp
+public static void Unsubscribe(string eventName, Action<T> listener) 
+```
+Permite que un listener se desuscriba de un evento, evitando que se ejecute cuando el evento sea publicado.
+
+Si el evento existe en el diccionario `_eventListeners`, se busca y elimina el listener específico de la lista de suscriptores. Igualmente, si después de eliminar el listener, la lista de suscriptores está vacía, también se elimina la entrada del evento del diccionario.
 
 ---
 

@@ -11,7 +11,7 @@ El sistema de control de juego se encarga de definir y gestionar la estructura l
 |Nombre|Tipo|Namespace|Descripción|
 |-|-|-|-|
 |[GameAdapter](/docs/juego/arquitecura/control-juego/GameAdapter)|`<TMode, TAttributes>`|Core|Adaptador para el instanciado de modos de juego|
-|GameModeBase|`abstract <TAttribtes> : IGameMode`|Core|Clase en la que se basan estructuralmente los modos de juego|
+|[GameModeBase](/docs/juego/arquitecura/control-juego/GameModeBase/)|`abstract <TAttribtes> : IGameMode`|Core|Clase en la que se basan estructuralmente los modos de juego|
 |IGameMode|`interface`|Interfaces|Métodos escenciales de un juego|
 |ListEvent|`class`|Core|Lista de eventos de un juego|
 |NodeEvent|`class`|Core|Evento de un juego|
