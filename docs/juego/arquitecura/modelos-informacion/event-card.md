@@ -1,6 +1,7 @@
 ---
 id: Event-card
 title: Event-card
+sidebar_position: 3
 ---
 
 

@@ -1,6 +1,7 @@
 ---
 id: Deck
 title: Deck
+sidebar_position: 2
 ---
 
 ## Descripcion

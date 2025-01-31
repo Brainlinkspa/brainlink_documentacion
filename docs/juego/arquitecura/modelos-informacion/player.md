@@ -1,6 +1,7 @@
 ---
 id: Player
 title: Player
+sidebar_position: 4
 ---
 
 ## Descripcion
