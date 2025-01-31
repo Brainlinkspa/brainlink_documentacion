@@ -65,7 +65,7 @@ Respuesta exitosa:
 ### 4. **Almacenamiento en Cookies**:
    - El token generado se almacena en una **cookie** segura para mantener la sesión activa.
 
-```typescrypt
+```typescript 
  const token = this.authService.generateToken();
 ```
 

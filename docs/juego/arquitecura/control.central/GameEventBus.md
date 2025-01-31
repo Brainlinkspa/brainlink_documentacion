@@ -23,7 +23,7 @@ Esto se consigue gracias al uso de `<T>` en la clase `GameEventBus<T>` lo que ha
 A continuación se proporcionaran ejemplos de uso referente a otras clases similares.
 
 ### Uso de instanciados singulares
-```
+```csharp
 //Clase singleton
 public class ModalManager
 {

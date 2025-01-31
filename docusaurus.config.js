@@ -144,8 +144,10 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['http', 'json', 'typescript', 'csharp', 'css'],
       },
     }),
+    
 };
 
 export default config;
