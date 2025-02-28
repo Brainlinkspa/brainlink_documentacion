@@ -1,145 +1,136 @@
 ---
-id: auth-service-config
-title: Servicios de Autenticacion.
+id: auth-service
+title: AuthService
+sidebar_label: AuthService
 ---
 
-# Servicios de Autenticacion.
+# AuthService
 
-En esta sección, configuraremos el servicio de autenticación utilizando **NestJS** y **PostgreSQL**.
+El servicio `AuthService` es una clase inyectable en una aplicación NestJS que maneja la autenticación de usuarios. Proporciona métodos para validar credenciales, verificar tokens JWT, gestionar cookies y realizar consultas a una base de datos PostgreSQL.
 
-## Validación de Usuario
+## Descripción General
 
-En esta sección, implementamos el método para validar las credenciales del usuario, como su **correo electrónico** y **contraseña**.
+Este servicio utiliza las siguientes dependencias:
+- **`@nestjs/common`**: Para definir el servicio como inyectable.
+- **`pg`**: Para interactuar con una base de datos PostgreSQL.
+- **`bcrypt`**: Para comparar contraseñas de forma segura.
+- **`jsonwebtoken`**: Para generar y verificar tokens JWT.
+- **`express`**: Para manejar cookies en las respuestas HTTP.
 
-### Código para Validar al Usuario
+## Constructor
 
-El siguiente código consulta la base de datos para verificar si el correo electrónico proporcionado coincide con un usuario registrado. Luego, usa **bcrypt** para comparar las contraseñas de manera segura.
+El constructor inicializa una conexión a la base de datos PostgreSQL utilizando el paquete `pg`. La configuración de la base de datos se realiza mediante variables de entorno:
 
 ```typescript
-async validateUser(email: string, password: string): Promise<any> {
-  // Realiza una búsqueda del usuario con el correo proporcionado
-  try {
-    const user = await this.findUserByEmail(email);
-
-    if (user) {
-      // Verifica si la contraseña proporcionada es válida con el hash almacenado
-      const isPasswordValid = await this.comparePassword(password, user.passwordHash);
-
-      if (isPasswordValid) {
-        // Si la contraseña es válida, guarda la información del usuario
-        this.currentUser = {
-          email: user.email,
-          rolId: user.roleId,
-        };
-        return this.currentUser;
-      } else {
-        // Si la contraseña no es válida
-        return null;
-      }
-    } else {
-      // Si el usuario no existe
-      return null;
-    }
-  } catch (error) {
-    // Maneja los posibles errores sin exponer detalles
-    throw new Error('Error al validar el usuario');
-  }
-}
+this.pool = new Pool({
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT, 10),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
 ```
 
-![Diagrama Ilustrativo de autenticacion de token.](../../../../static/auth-img/AutenticarToken.png)
+## Métodos Principales
+## 1. `validateUser(email: string, password: string): Promise<any>`
+Valida las credenciales de un usuario comparando el correo electrónico y la contraseña con los datos almacenados en la base de datos.
 
-## Generación de Tokens JWT
+## Parámetros :
+`email`: Correo electrónico del usuario.
+`password`: Contraseña proporcionada por el usuario.
+## Retorna :
+Un objeto con el ID y el rol del usuario si las credenciales son válidas.
+`null` si las credenciales no coinciden.
 
-Aquí implementamos la funcionalidad para generar un **token JWT** cuando el usuario se autentica correctamente.
+## 2. `checkEmailExists(email: string): Promise<boolean>`
+Verifica si un correo electrónico ya existe en la base de datos.
 
-### Código para Generar un Token
+## Parámetros :
+`email`: Correo electrónico a verificar.
+## Retorna :
+`true` si el correo existe.
+`false` si el correo no existe.
 
-Cuando el usuario se autentica correctamente, generamos un **token JWT** que incluye el correo electrónico y el rol del usuario.
+## 3. `generateToken(userId: string, rolId: number): string`
+Genera un token JWT para el usuario autenticado.
+
+Parámetros :
+`userId`: ID del usuario.
+`rolId`: ID del rol del usuario.
+Retorna :
+Un token JWT firmado con una clave secreta.
+Configuración del payload :
 
 ```typescript
-generateToken(): string {
-  // Verifica si hay un usuario actual
-  if (!this.currentUser) {
-    throw new Error('No hay usuario actual para generar un token');
-  }
-
-  // Prepara el contenido del token con la información del usuario
-  const payload = {
-    email: this.currentUser.email,
-    rolId: this.currentUser.rolId,
-  };
-
-  // Define una clave secreta y genera el token con un tiempo de expiración
-  const secretKey = process.env.JWT_SECRET || 'clave_secreta_defecto';
-  const token = this.createJWT(payload, secretKey, { expiresIn: '1h' });
-
-  return token;
-}
+const payload = {
+  id: userId,
+  rolId: rolId,
+};
 ```
 
-## Verificación de Tokens JWT
+## 4. `verifyToken(token: string): Promise<any>`
+Verifica la validez de un token JWT.
 
-Este método se encarga de verificar la validez de un token JWT proporcionado. Si el token es válido, lo decodifica y devuelve la información contenida en él.
+## Parámetros :
+token: Token JWT a verificar.
+## Retorna :
+El payload decodificado si el token es válido.
+`null` si el token es inválido o ha expirado.
 
-### Código para Verificar el Token
+## 5. `addTokenToCookies(res: Response, token: string): void`
+Agrega un token JWT a las cookies de la respuesta HTTP.
 
-El siguiente código recibe un token, lo verifica y, si es válido, devuelve los datos decodificados (Actual):
+## Parámetros :
+`res`: Objeto de respuesta HTTP.
+`token`: Token JWT a agregar.
+
+## Configuración de las cookies :
 
 ```typescript
-async verifyToken(token: string): Promise<any> {
-  try {
-    // Obtiene una clave secreta y verifica la validez del token
-    const secretKey = process.env.JWT_SECRET || 'clave_secreta_defecto';
-    const decodedToken = this.verifyJWT(token, secretKey);
-    return decodedToken;  // Devuelve la información decodificada
-  } catch (error) {
-    // Si ocurre algún error en la verificación, retorna null
-    return null;
-  }
-}
+res.cookie('auth_token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'true',
+  sameSite: 'lax',
+  maxAge: 3600000, // 1 hora
+});
 ```
 
-![Diagrama Ilustrativo para autenticar el token.](../../../../static/auth-img/AutenticarToken.png)
+## 6. `getTokenFromCookies(req: any): string | null`
+Obtiene el token JWT almacenado en las cookies de la solicitud HTTP.
 
-## Manejo de Cookies para Autenticación
+## Parámetros :
+`req`: Objeto de solicitud HTTP.
+## Retorna :
+El token JWT si está presente.
+`null` si no hay token.
 
-En esta sección, gestionamos las cookies del navegador para almacenar el token JWT y permitir la autenticación persistente.
+## 7. `removeTokenFromCookies(res: Response): void`
+Elimina el token JWT de las cookies de la respuesta HTTP.
 
-### Código para Agregar el Token a las Cookies
+## Parámetros :
+`res`: Objeto de respuesta HTTP.
 
-Cuando un usuario se autentica, podemos almacenar el token JWT en una cookie para que se mantenga entre sesiones.
+## Métodos Auxiliares
+`getCurrentUser(): any`
+Retorna el usuario actual almacenado en memoria.
+
+`clearCurrentUser(): void`
+Limpia el usuario actual almacenado en memoria.
+
+## Manejo de Errores
+El servicio incluye manejo de errores para:
+
+Conexiones fallidas a la base de datos.
+Consultas SQL fallidas.
+Verificación de tokens JWT inválidos.
+Ejemplo de manejo de errores :
 
 ```typescript
-addTokenToCookies(res: Response, token: string): void {
-  res.cookie('auth_token', token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
-    maxAge: 3600000, // 1 hora
-  });
-}
-```
-
-## Verificación del Token y Respuesta
-
-Este método permite verificar el token JWT de una solicitud y responder al cliente con un mensaje adecuado.
-
-### Código para Verificar el Token y Responder
-
-El siguiente código maneja la verificación del token y responde al cliente con un mensaje de éxito o error según la validez del token.
-
-```typescript
-verifyTokenAndRespond(res: Response, token: string | null): void {
-  if (token) {
-    const decoded = this.verifyToken(token);
-    if (decoded) {
-      res.status(202).send({ message: 'Token válido', decoded });
-    } else {
-      res.status(204).send({ message: 'Token expirado o inválido' });
-    }
-  } else {
-    res.status(204).send({ message: 'No token provided' });
-  }
+try {
+  const result = await this.pool.query(query, values);
+  return result.rows.length > 0;
+} catch (error) {
+  console.error('Error al verificar el correo en la base de datos:', error);
+  throw new Error('Error al verificar el correo');
 }
 ```

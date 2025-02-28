@@ -36,4 +36,4 @@ AuthSystem/
 
 ## Diagrama del proyecto:
 
-![Diagrama Ilustrativo de estructura del codigo.](../../../static/auth-img/DiagramaServicioGeneral.png)
+![Diagrama Ilustrativo de estructura del codigo.](../../../static/auth-img/general.png)

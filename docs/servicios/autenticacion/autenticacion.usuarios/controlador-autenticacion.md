@@ -1,118 +1,118 @@
 ---
-id: auth-controller
-title: Controlador de Autenticación
+title: Auth-Controller
+sidebar_label: AuthController
 ---
 
-# Controlador de Autenticación (AuthController) y su uso
+El archivo `auth.controller.ts` es un controlador en NestJS que maneja las operaciones relacionadas con la autenticación de usuarios. Este controlador define endpoints para gestionar el inicio de sesión (`login`), la verificación del token (`verify-token`), el cierre de sesión (`logout`) y la verificación de la existencia de un correo electrónico (`check-email`).
 
-El **AuthController** es el responsable de manejar las rutas relacionadas con la autenticación de usuarios. En este controlador, tenemos dos rutas principales:
+## Importaciones
 
-1. **POST `/auth/login`**: Realiza el inicio de sesión de un usuario, validando sus credenciales y generando un token JWT.
-2. **POST `/auth/verify-token`**: Verifica la validez de un token JWT previamente generado, asegurando que el usuario sigue autenticado.
+```typescript
+import { Controller, Post, Body, HttpCode, HttpStatus, Res, Req } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { Response, Request } from 'express';
+```
 
-## 1. Ruta para Login (`/auth/login`)
+@nestjs/common : Proporciona decoradores como `@Controller`, `@Post`, `@Body`, etc., para definir rutas y manejar solicitudes HTTP.
+AuthService : Un servicio personalizado que encapsula la lógica de negocio relacionada con la autenticación.
+Response y Request : Tipos de Express para manejar respuestas y solicitudes HTTP.
 
-La ruta `POST /auth/login` se utiliza para autenticar a un usuario. Esta ruta toma las **credenciales** proporcionadas (correo electrónico y contraseña) y devuelve un **token JWT** si las credenciales son válidas.
+## Controlador: `AuthController`
 
-### 1. **Entrada (Request)**
-   - Recibe un **body** con las siguientes propiedades:
-     - `email`: Correo electrónico del usuario.
-     - `password`: Contraseña del usuario.
-
-Ejemplo de Petición:
-
-```http
-POST /auth/login HTTP/1.1
-Host: your-api.com
-Content-Type: application/json
-
-{
-  "email": "usuario@example.com",
-  "password": "contraseña-segura"
+```typescript
+@Controller('auth')
+export class AuthController {
+  constructor(private readonly authService: AuthService) {}
 }
 ```
 
-### 2. **Validación**
-   - El servicio de autenticación valida las credenciales del usuario contra la base de datos.
-   - Si las credenciales son incorrectas, se retorna un **error 401 (Unauthorized)**.
+El controlador está registrado bajo la ruta base `/auth`. Utiliza el servicio `AuthService` para realizar operaciones como la validación de usuarios, generación de tokens y manejo de cookies.
 
-Respuesta de error:
+## Endpoint: `POST /auth/login`
+Este endpoint permite a los usuarios iniciar sesión proporcionando su correo electrónico y contraseña.
 
-```json
-{
-  "message": "Credenciales inválidas",
-  "statusCode": 401
-}
-```
+Parámetros de entrada
+email : Correo electrónico del usuario.
+password : Contraseña del usuario.
+Flujo de ejecución
+## 1. Validación del usuario :
+Se utiliza el método `validateUser` del servicio `AuthService` para verificar las credenciales.
+Si las credenciales son inválidas, se devuelve un error con el código `401 Unauthorized`.
+## 2. Generación del token :
+Si el usuario es válido, se genera un token JWT utilizando el método `generateToken` del servicio `AuthService`.
+El token se almacena en las cookies mediante el método `addTokenToCookies`.
+## 3 Redirección :
+Se obtiene el valor del encabezado `x-id` para determinar la URL de redirección.
+Por defecto, los usuarios son redirigidos a `http://localhost:4000/pages?id=docentes`.
+## 4 Respuesta :
+Devuelve un mensaje de éxito y la URL de redirección.
+Ejemplo de respuesta
 
-![Diagrama Ilustrativo de login fallido.](../../../../static/auth-img/LoginFallido.png)
-
-### 3. **Generación del Token**
-   - Si las credenciales son válidas, el servicio genera un **token JWT** que contiene la información del usuario (como el correo y rol).
-
-Respuesta exitosa:
-
-```json
+```typescript
 {
   "message": "Login exitoso",
-  "statusCode": 200,
-  "token": "jwt-token-generado"
+  "redirectUrl": "http://localhost:4000/pages?id=docentes"
 }
 ```
 
-![Diagrama Ilustrativo de login exitoso.](../../../../static/auth-img/LoginExitoso.png)
+## Endpoint: `POST /auth/verify-token`
+Este endpoint verifica la validez del token almacenado en las cookies del usuario.
 
-### 4. **Almacenamiento en Cookies**:
-   - El token generado se almacena en una **cookie** segura para mantener la sesión activa.
+## Flujo de ejecución
+## 1 Obtención del token :
+Se extrae el token de las cookies utilizando el método `getTokenFromCookies`.
+## 2 Verificación del token :
+Se verifica la validez del token utilizando el método `verifyToken` del servicio `AuthService`.
+Si el token no es válido o ha expirado, se devuelve un error con el código `403 Forbidden`.
+## 3 Respuesta :
+Si el token es válido, se devuelve el ID y el rol del usuario.
+Ejemplo de respuesta
 
-```typescript 
- const token = this.authService.generateToken();
-```
-
-## 2. Verificación de Token
-
-La ruta `POST /auth/verify-token` permite verificar la validez de un token JWT. Esta ruta es útil para asegurarse de que un usuario sigue autenticado antes de realizar ciertas acciones en la aplicación.
-
-### Entrada (Request)
-
-- **Recibe** el **token JWT** de las cookies que fue almacenado previamente en el login.
-
-### Ejemplo de Petición
-
-```http
-POST /auth/verify-token HTTP/1.1
-Host: your-api.com
-Content-Type: application/json
-```
-
-### Verificación del Token
-
-- El **servicio de autenticación** verifica que el token no haya expirado y que sea válido.
-- Si el token no es válido o ha expirado, se retorna un **error 403 (Forbidden)**.
-
-### Respuestas (Response)
-
-- Si el token es válido, se devuelve la información decodificada del token (como el correo electrónico y el rol del usuario). (Estado actual, despues solo sera enviada una respuesta de que el token es valido.)
-
-### Respuesta si el token es valido:
-
-```json
+```typescript
 {
   "message": "Token válido",
   "statusCode": 200,
+  "user": {
+    "id": "123",
+    "rol_id": "1"
+  }
 }
 ```
 
-![Diagrama Ilustrativo para validar el token (caso exitoso).](../../../../static/auth-img/TokenValido.png)
+Endpoint: POST /auth/logout
+Este endpoint permite a los usuarios cerrar sesión eliminando el token de las cookies.
 
+Respuesta
 
-### Respuesta de token no valido:
-
-```json
+```typescript
 {
-  "message": "Token inválido o expirado",
-  "statusCode": 403
+  "message": "Logout exitoso",
+  "statusCode": 200
 }
 ```
 
-![Diagrama Ilustrativo que valida el token (caso no exitoso).](../../../../static/auth-img/TokenInvalido.png)
+## Endpoint: POST /auth/check-email
+Este endpoint verifica si un correo electrónico ya existe en la base de datos.
+
+## Parámetros de entrada
+email : Correo electrónico a verificar.
+## Respuesta
+Si el correo existe, devuelve ```typescript{ exists: true }```.
+Si el correo no existe, devuelve ```typescript{ exists: false }```.
+Manejo de errores
+En caso de error durante la verificación, se registra el error en la consola y se devuelve:
+
+```typescript
+{
+  "error": "Error al verificar el correo"
+}
+```
+
+Consideraciones adicionales
+## 1 Seguridad :
+Los tokens JWT se utilizan para garantizar la autenticación segura.
+Las cookies se utilizan para almacenar el token, lo que puede mejorar la seguridad si se configuran correctamente (por ejemplo, con la opción HttpOnly).
+## 2 Manejo de errores :
+Cada endpoint incluye un manejo adecuado de errores para garantizar que los clientes reciban respuestas claras y consistentes.
+## 3 Redirecciones :
+El sistema de redirecciones se basa en el encabezado x-id, lo que permite una personalización flexible según el contexto del cliente.
