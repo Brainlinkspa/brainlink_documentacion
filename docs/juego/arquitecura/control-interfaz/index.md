@@ -12,5 +12,5 @@ El sistema de control visual es responsable de gestionar y actualizar las interf
 |-|-|-|-|
 |UIManager|`class`|Managers|Director encargado de la carga de interfaces|
 |ModalManager|`class`|Managers|Director encargado de la carga de modales|
-|AnimatorCommand|`class`|Core||
+|AnimatorCommand|`class`|Core|Director encargado de hacer que las animaciones sean ejecutadas correctamente|
 |UI|`abstract`|Core|Clase en la que se basan estructuralmente las interfaces|
